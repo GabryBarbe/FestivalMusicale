@@ -304,8 +304,8 @@ def insert_performance():
             estensione = img.filename.split('.')[-1].lower()
             solo_nome = img.filename.split('.')[0]
             image_name = f"performance_{artista}_{performances_dao.get_perf_id_from_artist(artista)}_{solo_nome}.{estensione}"
-            img.save(f'static/performances-images/{image_name}')
-            immagini_url.append(f'static/performances-images/{image_name}')
+            img.save(f'FestivalMusicale/static/performances-images/{image_name}')
+            immagini_url.append(f'FestivalMusicale/static/performances-images/{image_name}')
 
     # Inserisci le immaigni nel DB
     performace_id = performances_dao.get_perf_id_from_artist(artista)
@@ -376,8 +376,8 @@ def add_performance_images(performance_id):
             estensione = img.filename.split('.')[-1].lower()
             solo_nome = img.filename.split('.')[0]
             image_name = f"performance_{performance_id}_{solo_nome}.{estensione}"
-            img.save(f'static/performances-images/{image_name}')
-            immagini_url.append(f'static/performances-images/{image_name}')
+            img.save(f'FestivalMusicale/static/performances-images/{image_name}')
+            immagini_url.append(f'FestivalMusicale/static/performances-images/{image_name}')
 
     # Inserisci le immagini nel DB
     immagini_dao.insert_images(immagini_url, performance_id)

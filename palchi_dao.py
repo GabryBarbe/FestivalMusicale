@@ -3,7 +3,7 @@ import sqlite3
 def get_all_stages():
     query = "SELECT * FROM Palchi"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
 
@@ -16,7 +16,7 @@ def get_all_stages():
 def get_stage_name_by_id(stage_id):
     query = "SELECT NomePalco FROM Palchi WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (stage_id,))
 

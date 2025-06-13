@@ -3,7 +3,7 @@ import sqlite3
 def get_emails_of_registered_users():
     query = "SELECT Email FROM Utenti"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
 
@@ -16,7 +16,7 @@ def get_emails_of_registered_users():
 def get_password_from_email(email):
     query = "SELECT Password FROM Utenti WHERE Email = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (email,))
 
@@ -29,7 +29,7 @@ def get_password_from_email(email):
 def get_user_by_email(email):
     query = "SELECT * FROM Utenti WHERE Email = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (email,))
 
@@ -52,7 +52,7 @@ def get_user_by_email(email):
 def get_user_by_id(user_id):
     query = "SELECT * FROM Utenti WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (user_id,))
 
@@ -75,7 +75,7 @@ def get_user_by_id(user_id):
 def insert_user(user_data):
     query = "INSERT INTO Utenti (Nome, Cognome, Email, Password, Ruolo) VALUES (?, ?, ?, ?, ?)"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (user_data['nome'], user_data['cognome'], user_data['email'], user_data['password'], user_data['ruolo']))
 
@@ -85,7 +85,7 @@ def insert_user(user_data):
 def get_performances_by_user_id(user_id):
     query = "SELECT PerformanceID FROM Utenti WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (user_id,))
 
@@ -98,7 +98,7 @@ def get_performances_by_user_id(user_id):
 def connect_ticket_to_user(ticket_id, user_id):
     query = "UPDATE Utenti SET TicketID = ? WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (ticket_id, user_id))
 
@@ -108,7 +108,7 @@ def connect_ticket_to_user(ticket_id, user_id):
 def get_ticket_by_user_id(user_id):
     query = "SELECT TicketID FROM Utenti WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (user_id,))
 

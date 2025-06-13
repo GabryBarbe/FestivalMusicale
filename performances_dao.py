@@ -7,7 +7,7 @@ def insert_performance(data):
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     """
     
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, data)
     
@@ -17,7 +17,7 @@ def insert_performance(data):
 def get_perf_id_from_artist(artista):
     query = "SELECT ID FROM Performances WHERE Artista = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (artista,))
 
@@ -31,7 +31,7 @@ def get_perf_id_from_artist(artista):
 def get_artists_of_performances():
     query = "SELECT Artista FROM Performances"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
 
@@ -44,7 +44,7 @@ def get_artists_of_performances():
 def get_performance_by_id(perf_id):
     query = "SELECT * FROM Performances WHERE ID = ?"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (perf_id,))
 
@@ -70,7 +70,7 @@ def get_performance_by_id(perf_id):
 
 def get_performances_by_organizer(organizer_id):
     query = "SELECT * FROM Performances WHERE OrganizzatoreID = ?"
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (organizer_id,))
     performances = cursor.fetchall()
@@ -99,7 +99,7 @@ def update_performance(performance_id, artista, giorno_inizio, ora_inizio, durat
         WHERE ID = ?
     """
     
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (artista, giorno_inizio, ora_inizio, durata, descrizione, palco, genere, performance_id))
     
@@ -109,7 +109,7 @@ def update_performance(performance_id, artista, giorno_inizio, ora_inizio, durat
 def set_performance_published(performance_id):
     query = "UPDATE Performances SET Pubblicata = 1 WHERE ID = ?"
     
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (performance_id,))
     
@@ -119,7 +119,7 @@ def set_performance_published(performance_id):
 def delete_performance(performance_id):
     query = "DELETE FROM Performances WHERE ID = ?"
     
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (performance_id,))
     
@@ -129,7 +129,7 @@ def delete_performance(performance_id):
 def get_all_performances():
     query = "SELECT * FROM Performances"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
 
@@ -155,7 +155,7 @@ def get_all_performances():
 def get_all_public_performances():
     query = "SELECT * FROM Performances WHERE Pubblicata = 1"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
 
@@ -181,7 +181,7 @@ def get_all_public_performances():
 def get_draft_performances_by_organizer(organizer_id):
     query = "SELECT * FROM Performances WHERE OrganizzatoreID = ? AND Pubblicata = 0"
 
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query, (organizer_id,))
     
@@ -219,7 +219,7 @@ def get_performances_ordered():
         END,
         OraInizio
     """
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
     performances = cursor.fetchall()
@@ -243,7 +243,7 @@ def get_performances_ordered():
 def get_all_genres_of_public_performances():
     query = "SELECT DISTINCT GenereMusicale FROM Performances WHERE Pubblicata = 1"
     
-    conn = sqlite3.connect('sunrift.db')
+    conn = sqlite3.connect('FestivalMusicale/sunrift.db')
     cursor = conn.cursor()
     cursor.execute(query)
     
