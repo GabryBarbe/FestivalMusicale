@@ -1,0 +1,137 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/homepage_styles.css">
+{% endblock %}
+
+{% block content %}
+<!--
+  FILTRAGGIO PERFORMANCE HOMEPAGE
+  Questo template implementa un sistema di filtri lato server per giorno, palco e genere musicale.
+  Funzionamento:
+  - I filtri sono tre <select> in un form con method="get". Ogni select ha onchange="this.form.submit()" per inviare subito la scelta.
+  - Quando l'utente seleziona un filtro, la pagina viene ricaricata con i parametri scelti nella query string (es: ?giorno=sabato&palco=Main Stage&genere=Pop).
+  - Flask/Jinja accede ai valori selezionati tramite request.args.get('giorno'), request.args.get('palco'), request.args.get('genere').
+  - Le opzioni dei filtri "palco" e "genere" sono popolate dinamicamente dalle variabili p_palchi e p_generi passate dal backend.
+  - Nel ciclo delle performance, per ogni performance si calcolano tre variabili booleane:
+      giorno_match: True se il filtro giorno è vuoto o corrisponde al giorno della performance (case-insensitive)
+      palco_match: True se il filtro palco è vuoto o corrisponde al palco della performance
+      genere_match: True se il filtro genere è vuoto o corrisponde al genere della performance
+  - In questo modo, la pagina mostra sempre e solo le performance che rispettano i filtri selezionati
+-->
+
+{% if p_message %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ p_message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+{% if p_nome_utente and p_cognome_utente %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Bentornat* {{ p_nome_utente }} {{ p_cognome_utente }}!</strong> Accesso effettuato con successo.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-2 display-md-1 display-lg-1 mb-4 fw-bold homepage-title">11-12-13 Luglio 2025</h1>
+            <p class="lead mt-4 fs- homepage-lead">Scopri maggiori dettagli nella sezione <b>Info</b> oppure </p>
+            <a href="/infopage" class="btn rounded-pill px-3" role="button" id="infopage-btn-home">CLICCA QUI!</a>
+        </div>
+    </div>
+</div>
+
+<div class="mb-5"></div>
+
+<div class="container mb-1">
+    <div class="row justify-content-center">
+        <div class="col-md-10 text-center">
+            <h2 class="fw-bold homepage-calendar-title mb-4">Dai un'occhiata al
+                calendario completo delle performance e pianifica il tuo viaggio attraverso la musica e l'arte del
+                festival.</h2>
+            <form class="row g-3 justify-content-center mb-0" id="performance-filters" method="get">
+                <div class="col-12 col-md-3">
+                    <select class="form-select" id="filter-giorno" name="giorno" onchange="this.form.submit()">
+                        <option value="" {% if not request.args.get('giorno') %}selected{% endif %}>Tutti i giorni
+                        </option>
+                        <option value="venerdi" {% if request.args.get('giorno')=='venerdi' %}selected{% endif %}>
+                            Venerdì</option>
+                        <option value="sabato" {% if request.args.get('giorno')=='sabato' %}selected{% endif %}>Sabato
+                        </option>
+                        <option value="domenica" {% if request.args.get('giorno')=='domenica' %}selected{% endif %}>
+                            Domenica</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <select class="form-select" id="filter-palco" name="palco" onchange="this.form.submit()">
+                        <option value="" {% if not request.args.get('palco') %}selected{% endif %}>Tutti i palchi
+                        </option>
+                        {% for palco in p_palchi %}
+                        <option value="{{ palco }}" {% if request.args.get('palco')==palco %}selected{% endif %}>{{
+                            palco }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 col-md-3">
+                    <select class="form-select" id="filter-genere" name="genere" onchange="this.form.submit()">
+                        <option value="" {% if not request.args.get('genere') %}selected{% endif %}>Tutti i generi
+                        </option>
+                        {% for genere in p_generi %}
+                        <option value="{{ genere }}" {% if request.args.get('genere')==genere %}selected{% endif %}>{{
+                            genere }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="album py-5 bg-body-tertiary tickets-album">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for perf in p_performances_list %}
+            <!-- Mostra la performance solo se:
+                  - Nessun filtro giorno selezionato (mostra tutto)
+                  - Oppure il giorno della performance corrisponde al filtro selezionato
+                  - E il palco corrisponde al filtro selezionato (se presente)
+                  - E il genere corrisponde al filtro selezionato (se presente)
+                  Il confronto è case-insensitive grazie a |lower.  -->
+            {% set giorno_match = (not request.args.get('giorno') or perf['GiornoInizio']|lower ==
+            request.args.get('giorno')) %}
+            {% set palco_match = (not request.args.get('palco') or perf['Palco'] == request.args.get('palco')) %}
+            {% set genere_match = (not request.args.get('genere') or perf['GenereMusicale'] ==
+            request.args.get('genere')) %}
+            {% if giorno_match and palco_match and genere_match %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="/{{ perf['Immagine']}}"
+                        class="bd-placeholder-img card-img-top tickets-img" alt="Immagine performance">
+                    <div class="card-body text-center">
+                        <h4 class="card-title mb-2 tickets-title">{{ perf['Artista'] }}</h4>
+                        <div class="mb-1 tickets-date">
+                            <span>{{ perf['GiornoInizio'] }}</span> &middot; <span>{{ perf['OraInizio'] }}</span>
+                        </div>
+                        <div class="mb-1 tickets-stage">
+                            Palco: <span>{{ perf['Palco'] }}</span>
+                        </div>
+                        <div class="mb-3 tickets-duration">
+                            Durata: {{ perf['Durata'] }} min
+                        </div>
+                        <a href="{{ url_for('performance', performance_id=perf['ID']) }}"
+                            class="btn btn-success w-100">Scopri di più</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-"
+    crossorigin="anonymous"></script>
+
+{% endblock %}

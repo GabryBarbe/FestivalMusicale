@@ -1,0 +1,251 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/performance_styles.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+{% endblock %}
+
+
+{% block content %}
+{% if error_message %}
+<div class="alert alert-danger alert-dismissible fade show performance-error-alert w-100" role="alert">
+    {{ error_message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<div class="performance-images-grid">
+    {% if p_immagini and p_immagini|length > 0 %}
+    {% for img in p_immagini %}
+    <div class="performance-img-grid-item position-relative">
+        {% if p_edit %}
+        <form method="post" action="{{ url_for('delete_performance_image', performance_id=p_performance['ID']) }}"
+            class="delete-image-form">
+            <input type="hidden" name="image_url" value="{{ img }}">
+            <button type="submit" class="btn btn-danger btn-sm btn-delete-image"
+                title="Elimina immagine">&times;</button>
+        </form>
+        {% endif %}
+        <img src="/{{ img }}" class="performance-img-grid-img" alt="Immagine performance {{ loop.index }}">
+    </div>
+    {% endfor %}
+    {% if p_edit %}
+    <div class="performance-img-grid-item add-image-item" data-bs-toggle="modal" data-bs-target="#addImageModal">
+        <span class="add-image-plus">+</span>
+    </div>
+    {% endif %}
+    {% else %}
+    {% if p_edit %}
+    <div class="performance-img-grid-item add-image-item" data-bs-toggle="modal" data-bs-target="#addImageModal">
+        <span class="add-image-plus">+</span>
+    </div>
+    {% else %}
+    <div class="performance-img-placeholder">
+        <span class="placeholder-x">X</span>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+
+<!-- Modal aggiunta immagini -->
+{% if p_edit %}
+<div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ url_for('add_performance_images', performance_id=p_performance['ID']) }}"
+                enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addImageModalLabel">Aggiungi Immagini</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="file" class="form-control" name="performanceImages" accept="image/*" multiple required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="submit" class="btn btn-primary">Carica</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="performance-details-card position-relative">
+    <h2 class="performance-title">{{ p_performance['Artista'] }}</h2>
+    <div class="performance-details-flex">
+        <div class="performance-detail-block">
+            <span class="performance-detail-label highlight">Giorno</span>
+            <span class="performance-detail-value big">{{ p_performance['GiornoInizio'] }}</span>
+        </div>
+        <div class="performance-detail-block">
+            <span class="performance-detail-label highlight">Ora</span>
+            <span class="performance-detail-value big">{{ p_performance['OraInizio'] }}</span>
+        </div>
+        <div class="performance-detail-block">
+            <span class="performance-detail-label highlight">Durata</span>
+            <span class="performance-detail-value big">{{ p_performance['Durata'] }} min</span>
+        </div>
+        <div class="performance-detail-block">
+            <span class="performance-detail-label highlight">Palco</span>
+            <span class="performance-detail-value big">{{ p_performance['Palco'] }}</span>
+        </div>
+        <div class="performance-detail-block">
+            <span class="performance-detail-label highlight">Genere</span>
+            <span class="performance-detail-value big">{{ p_performance['GenereMusicale'] }}</span>
+        </div>
+    </div>
+    <div class="performance-description">
+        <span class="performance-detail-label">Descrizione:</span>
+        <p>{{ p_performance['DescrizioneBreve'] }}</p>
+    </div>
+    {% if p_edit %}
+    <div
+        class="performance-actions-bar d-flex flex-column flex-md-row justify-content-between align-items-stretch gap-2 mt-4">
+        <button class="btn btn-warning btn-edit-performance flex-fill" data-bs-toggle="modal"
+            data-bs-target="#editPerformanceModal">
+            MODIFICA
+        </button>
+        <form method="post" action="{{ url_for('post_performance', performance_id=p_performance['ID']) }}"
+            id="publishForm" class="m-0 flex-fill d-flex justify-content-center">
+            <button type="button" class="btn btn-success btn-edit-performance w-100" data-bs-toggle="modal"
+                data-bs-target="#confirmPublishModal">PUBBLICA</button>
+        </form>
+        <button type="button" class="btn btn-danger btn-edit-performance flex-fill" data-bs-toggle="modal"
+            data-bs-target="#removePerformanceModal">ELIMINA</button>
+    </div>
+    {% endif %}
+</div>
+
+{% if p_edit %}
+<!-- Modal modifica performance -->
+<div class="modal fade" id="editPerformanceModal" tabindex="-1" aria-labelledby="editPerformanceModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{{ url_for('edit_performance', performance_id=p_performance['ID']) }}"
+                enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPerformanceModalLabel">Modifica Performance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="editArtista" class="form-label">Artista</label>
+                        <input type="text" class="form-control" id="editArtista" name="artista"
+                            value="{{ p_performance['Artista'] }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editGiorno" class="form-label">Giorno Inizio</label>
+                        <select class="form-select" id="editGiorno" name="giorno_inizio" required>
+                            <option value="venerdi" {% if p_performance['GiornoInizio']|lower=='venerdi' %}selected{%
+                                endif %}>Venerdì</option>
+                            <option value="sabato" {% if p_performance['GiornoInizio']|lower=='sabato' %}selected{%
+                                endif %}>Sabato</option>
+                            <option value="domenica" {% if p_performance['GiornoInizio']|lower=='domenica' %}selected{%
+                                endif %}>Domenica</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editOra" class="form-label">Ora Inizio</label>
+                        <input type="time" class="form-control" id="editOra" name="ora_inizio"
+                            value="{{ p_performance['OraInizio'] }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDurata" class="form-label">Durata (minuti)</label>
+                        <input type="number" class="form-control" id="editDurata" name="durata" min="1"
+                            value="{{ p_performance['Durata'] }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescrizione" class="form-label">Descrizione</label>
+                        <textarea class="form-control" id="editDescrizione" name="descrizione" rows="2"
+                            required>{{ p_performance['DescrizioneBreve'] }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPalco" class="form-label">Palco</label>
+                        <select class="form-select" id="editPalco" name="palco" required>
+                            {% for palco in p_palchi %}
+                            <option value="{{ palco[0] }}" {% if p_performance['PalcoID']==palco[0] or
+                                p_performance['Palco']==palco[1] %}selected{% endif %}>{{ palco[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editGenere" class="form-label">Genere Musicale</label>
+                        <input type="text" class="form-control" id="editGenere" name="genere"
+                            value="{{ p_performance['GenereMusicale'] }}" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="submit" class="btn btn-primary">Salva modifiche</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modale conferma eliminazione performance -->
+<div class="modal fade" id="removePerformanceModal" tabindex="-1" aria-labelledby="removePerformanceModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="removePerformanceModalLabel">Conferma eliminazione</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Sei sicuro di voler eliminare questa performance? L'operazione è irreversibile.
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annulla</button>
+                <form method="post" action="{{ url_for('remove_performance', performance_id=p_performance['ID']) }}"
+                    class="d-inline">
+                    <button type="submit" class="btn btn-outline-light">Elimina definitivamente</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modale conferma pubblicazione performance -->
+<div class="modal fade" id="confirmPublishModal" tabindex="-1" aria-labelledby="confirmPublishModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-danger text-white">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="confirmPublishModalLabel">Conferma pubblicazione</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Una volta pubblicata, la performance <b>non potrà più essere modificata</b>.<br>Sei sicuro di voler
+                continuare?
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-outline-light" id="confirmPublishYes">Sì, pubblica</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Questo script gestisce la conferma della pubblicazione di una performance.
+    // Quando l'utente clicca su "Sì, pubblica" nella modale di conferma,
+    // viene inviato il form "publishForm" che pubblica la performance.
+    // Il controllo avviene solo se entrambi gli elementi sono presenti nella pagina.
+    document.addEventListener('DOMContentLoaded', function () {
+        var confirmBtn = document.getElementById('confirmPublishYes');
+        var publishForm = document.getElementById('publishForm');
+        if (confirmBtn && publishForm) {
+            confirmBtn.addEventListener('click', function () {
+                publishForm.submit();
+            });
+        }
+    });
+</script>
+{% endif %}
+{% endblock %}

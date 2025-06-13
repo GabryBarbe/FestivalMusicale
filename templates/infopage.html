@@ -1,0 +1,124 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/infopage_styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-2 display-md-1 display-lg-1 mb-4 fw-bold">11-12-13 Luglio 2025</h1>
+            <p class="lead mb-4">Preparati a vivere tre giorni di pura energia, con il meglio della musica live,
+                esperienze
+                uniche e un'atmosfera che solo Sunrift può offrire.<br>
+                Dall'alba al tramonto, e oltre… ti aspettano artisti straordinari, aree relax immerse nella natura, food
+                truck selezionati e tanta voglia di ballare sotto il cielo di luglio.</p>
+            <h2 class="h4 h2-md h1-lg fw-bold mb-3">🌞 La musica si accende. Il sole non tramonta mai.</h2>
+            <p class="lead mt-4 fs-">Scopri il programma, prenota il tuo pass e unisciti alla tribù Sunrift!</p>
+        </div>
+    </div>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <div class="card-group infopage-cards w-75">
+        <div class="card">
+            <img src="static/images/panoramica-concerto.png" class="card-img-top"
+                alt="Panoramica del concerto al SunRift Festival">
+            <div class="card-body">
+                <h5 class="card-title">🎉 Quando lo facciamo?</h5>
+                <h6 class="card-subtitle mb-2 text-success">📅 11-13 Luglio 2025</h6>
+                <p class="card-text">Save the date! Sunrift prende vita per <b>tre giorni intensi</b>, dal venerdì alla
+                    domenica. Dalle prime luci del giorno fino a notte inoltrata, il festival pulsa al ritmo della
+                    musica, della natura e dell'estate.<br>
+                    <span class="fw-bold">Non è solo un evento, è un'esperienza da vivere tutta intera.</span>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static/images/foto_concerto_palco.png" class="card-img-top" alt="SunRift Festival">
+            <div class="card-body">
+                <h5 class="card-title">📍 Dove siamo?</h5>
+                <h6 class="card-subtitle mb-2 text-success">🌿 Parco Naturale La Mandria - Piemonte</h6>
+                <p class="card-text">A pochi chilometri da Torino, nel cuore del verde più autentico: un'area enorme e
+                    suggestiva, perfetta per ospitare i nostri 3 palchi tematici, aree chill, spazi food e zone
+                    campeggio.<br>
+                    <span class="fw-bold">Natura, libertà, e musica senza confini: benvenuto nel nostro piccolo mondo
+                        parallelo. </span>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static/images/foto_ragazzi_ballano.png" class="card-img-top"
+                alt="Ragazzi che ballano al SunRift Festival">
+            <div class="card-body">
+                <h5 class="card-title">✨ Perché venire?</h5>
+                <h6 class="card-subtitle mb-2 text-success">🎶 Perché è molto più di un festival.</h6>
+                <p class="card-text">A Sunrift non vieni solo per ascoltare musica. Vieni per sentire l’energia, per
+                    ballare con perfetti sconosciuti che diventano amici, per perderti sotto le luci dei palchi e
+                    ritrovarti davanti a un'alba.<br>
+                    <span class="fw-bold">Un weekend. Una community. Un ricordo che ti resta addosso.</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container px-4 py-5" id="featured-3">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.8em" fill="currentColor"
+                    class="bi bi-ticket-perforated" viewBox="0 0 16 16">
+                    <path
+                        d="M4 4.85v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9zm-7 1.8v.9h1v-.9zm7 0v.9h1v-.9z" />
+                    <path
+                        d="M1.5 3A1.5 1.5 0 0 0 0 4.5V6a.5.5 0 0 0 .5.5 1.5 1.5 0 1 1 0 3 .5.5 0 0 0-.5.5v1.5A1.5 1.5 0 0 0 1.5 13h13a1.5 1.5 0 0 0 1.5-1.5V10a.5.5 0 0 0-.5-.5 1.5 1.5 0 0 1 0-3A.5.5 0 0 0 16 6V4.5A1.5 1.5 0 0 0 14.5 3zM1 4.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v1.05a2.5 2.5 0 0 0 0 4.9v1.05a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-1.05a2.5 2.5 0 0 0 0-4.9z" />
+                </svg>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Acquista ora il tuo pass!</h3>
+            <p>Non perdere l'evento più luminoso dell'estate!
+                Scegli il tuo pass - giornaliero, 2 giorni o full pass - e preparati a vivere 3 giorni di musica,
+                energia e libertà.
+                I posti sono limitati… <b>entra nel mondo Sunrift adesso!</b></p>
+            <button class="btn btn-primary rounded-pill px-3" type="button"
+                onclick="window.location.href='/tickets'">Acquista</button>
+        </div>
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.8em" fill="currentColor"
+                    class="bi bi-geo-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411" />
+                </svg>
+            </div>
+            <h3 class="fs-2 text-body-emphasis">Scopri come raggiungerci!</h3>
+            <p>Scopri il modo più semplice e comodo per raggiungerci!
+                Che tu venga in auto, con i mezzi pubblici o a piedi, ti guidiamo passo passo per arrivare senza stress.
+                Non perdere l'occasione di venirci a trovare — <b>inizia il tuo viaggio verso di noi adesso!</b></p>
+            <button class="btn btn-primary rounded-pill px-3" type="button"
+                onclick="window.location.href='/come-raggiungerci'">Raggiungici</button>
+        </div>
+        <div class="feature col">
+            <div class="feature-icon d-inline-flex align-items-center justify-content-center fs-2 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.8em" height="1.8em" fill="currentColor"
+                    class="bi bi-calendar-heart" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
+                </svg>
+            </div>
+
+            <h3 class="fs-2 text-body-emphasis">Scopri la lineup!</h3>
+            <p>Preparati a scoprire gli artisti che faranno vibrare il palco!
+                Dalle stelle emergenti ai grandi nomi, la lineup di quest'anno è un mix esplosivo di energia, talento e
+                passione.
+                Non perdere nemmeno un attimo di questa esperienza unica — <b>entra nel mondo della musica con noi!</b>
+            </p>
+            <button class="btn btn-primary rounded-pill px-3" type="button"
+                onclick="window.location.href='/'">Lineup</button>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

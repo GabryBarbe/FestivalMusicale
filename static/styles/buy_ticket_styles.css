@@ -1,0 +1,56 @@
+/* Applica Roboto a tutto il form di acquisto biglietti */
+.buy-ticket-form, .buy-ticket-form * {
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* Etichette e bottoni in grassetto */
+.form-label,
+.form-check-label,
+button.btn,
+.btn-primary,
+.btn-secondary {
+    font-weight: 700;
+}
+
+/* Forza la label della checkbox nera */
+.form-check-label {
+    color: #212529 !important;
+}
+
+/* Migliora la visibilità delle label e input */
+.form-label {
+    font-size: 1.05rem;
+}
+
+.btn-primary, .btn-secondary {
+    border-radius: 2rem;
+    font-size: 1rem;
+    padding: 0.4rem 1.2rem;
+}
+
+.card.buy-ticket-card {
+    padding: 2.5rem 2rem !important;
+    margin: 1.5rem 2.5rem;
+    border-radius: 1.2rem;
+}
+
+.row.g-5 {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    gap: 1.2rem !important;
+    align-items: flex-start;
+}
+
+.col-md-5.col-lg-4.order-md-last {
+    flex: 0 0 30%;
+    max-width: 35%;
+    min-width: 240px;
+}
+
+.col-md-7.col-lg-8 {
+    flex: 0 0 70%;
+    max-width: 75%;
+    min-width: 320px;
+}

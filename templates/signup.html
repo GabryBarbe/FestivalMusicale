@@ -1,0 +1,77 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/login_signup_styles.css">
+{% endblock %}
+
+{% block content %}
+{% if alert_message %}
+<div class="alert alert-danger" role="alert">
+    {{ alert_message }}
+</div>
+{% endif %}
+<form class="row g-3 mx-auto login-form needs-validation" action="/signup-create-account" method="post" novalidate>
+    <div class="col-md-6">
+        <label for="inputNome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Inserisci il tuo nome" required>
+        <div class="invalid-feedback fw-bold">
+            Inserisci il nome.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="inputCognome" class="form-label">Cognome</label>
+        <input type="text" class="form-control" id="inputCognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+        <div class="invalid-feedback fw-bold">
+            Inserisci il cognome.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="inputEmail" class="form-label">Email</label>
+        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Inserisci la tua email" required>
+        <div class="invalid-feedback fw-bold">
+            Inserisci una email valida.
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Inserisci la tua password" required minlength="8">
+        <div class="invalid-feedback fw-bold">
+            Inserisci una password valida (almeno 8 caratteri).
+        </div>
+    </div>
+    <div class="col-12">
+        <label for="inputRuolo" class="form-label">Ruolo</label>
+        <select class="form-select" id="inputRuolo" name="ruolo" required>
+            <option value="" selected disabled>Scegli il ruolo...</option>
+            {% for ruolo in p_ruoli %}
+                <option value="{{ ruolo[0] }}">{{ ruolo[1]|capitalize }}</option>
+            {% endfor %}
+        </select>
+        <div class="invalid-feedback fw-bold">
+            Seleziona un ruolo.
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-feature">Registrati</button>
+    </div>
+</form>
+
+<!-- Codice JS per la validazione del form, preso direttanente da BS 
+     https://getbootstrap.com/docs/5.2/forms/validation/#custom-styles -->
+<script>
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })();
+</script>
+{% endblock %}

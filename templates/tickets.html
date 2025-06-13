@@ -1,0 +1,83 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/tickets_styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="motivational-phrase text-center mb-4">
+        Non perdere l'evento dell'anno — assicurati subito il tuo posto al concerto!
+    </div>
+
+    <div class="alert alert-warning text-center fw-bold" role="alert">
+        Attenzione! Una volta acquistato un pass non potrai cambiarlo nè potrà essere rimborsato. Scegli con cura!
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-12 col-md-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h3 class="card-title mb-3 daily-pass">DAILY PASS</h3>
+                    <p class="card-text flex-grow-1">Vivi una giornata esplosiva di musica e vibrazioni con accesso
+                        completo a tutti gli show del giorno.</p>
+                    <form class="mt-3" method="POST" action="/buy-ticket-redirect">
+                        <input type="hidden" name="p_pass" value="daily">
+                        <label for="daily-day-select">Seleziona il giorno:</label>
+                        <select id="daily-day-select" name="days" class="form-select my-2" required>
+                            <option value="">Scegli...</option>
+                            <!-- Abilita / Disabilita in base a disponibiltà (200 per gg)-->
+                            <option value="venerdi" {% if p_disponibilita[0] <= 0 %}disabled{% endif %}>Venerdì</option>
+                            <option value="sabato" {% if p_disponibilita[1] <= 0 %}disabled{% endif %}>Sabato</option>
+                            <option value="domenica" {% if p_disponibilita[2] <= 0 %}disabled{% endif %}>Domenica</option>
+                        </select>
+                        <button type="submit" class="btn btn-success mt-2 w-100"
+                            {% if p_disponibilita[0] <= 0 and p_disponibilita[1] <= 0 and p_disponibilita[2] <= 0 %}disabled{% endif %}>
+                            Procedi con l'acquisto
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h3 class="card-title mb-3 two-days-pass">2 DAYS PASS</h3>
+                    <p class="card-text flex-grow-1">Due giorni di pura energia: doppia dose di bassi, artisti e
+                        atmosfera senza sosta.</p>
+                    <form class="mt-3" method="POST" action="/buy-ticket-redirect">
+                        <input type="hidden" name="p_pass" value="2days">
+                        <label for="twodays-select">Seleziona i giorni:</label>
+                        <select id="twodays-select" name="days" class="form-select my-2" required>
+                            <option value="">Scegli...</option>
+                            <option value="venerdi-sabato" {% if p_disponibilita[0] <= 0 or p_disponibilita[1] <= 0 %}disabled{% endif %}>Venerdì + Sabato</option>
+                            <option value="sabato-domenica" {% if p_disponibilita[1] <= 0 or p_disponibilita[2] <= 0 %}disabled{% endif %}>Sabato + Domenica</option>
+                        </select>
+                        <button type="submit" class="btn btn-success mt-2 w-100"
+                            {% if (p_disponibilita[0] <= 0 or p_disponibilita[1] <= 0) and (p_disponibilita[1] <= 0 or p_disponibilita[2] <= 0) %}disabled{% endif %}>
+                            Procedi con l'acquisto
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="card h-100 shadow-sm text-center">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h3 class="card-title mb-3 full-pass">FULL PASS</h3>
+                    <p class="card-text flex-grow-1">L'esperienza totale: accesso completo a tutti i giorni, tutti i
+                        palchi, tutto il sound.</p>
+                    <form class="mt-3" method="POST" action="/buy-ticket-redirect">
+                        <input type="hidden" name="p_pass" value="full">
+                        <input type="hidden" name="days" value="venerdi-sabato-domenica">
+                        <button class="btn btn-success w-100" type="submit"
+                            {% if p_disponibilita[0] <= 0 or p_disponibilita[1] <= 0 or p_disponibilita[2] <= 0 %}disabled{% endif %}>
+                            Procedi con l'acquisto
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,389 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/profile_styles.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="p-5 text-center rounded-3 profile-jumbotron">
+                <h1 class="text-body-emphasis">Bentornat* {{current_user.nome}} {{current_user.cognome}}</h1>
+                {% if p_ruolo == "Partecipante" %}
+                <p class="lead">
+                    Questa è la tua <b>area personale!</b> Qui potrai visualizzare i tuoi dati e visualizzare i tuoi
+                    tickets!
+                </p>
+                {% else %}
+                <p class="lead">
+                    Questa è la tua <b>area personale!</b> Qui potrai visualizzare i tuoi dati e gestire le performances
+                    delle quali sei l'organizzatore!
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if error_message %}
+    <div class="alert alert-danger alert-dismissible fade show profile-error-alert w-100" role="alert">
+        {{ error_message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <!-- Sezione profilo in comune per partecipanti e organizzatori -->
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-3 d-flex align-items-stretch">
+            <div class="profile-sidebox text-center w-100 d-flex align-items-center justify-content-center">
+                <div class="profile-info w-100">
+                    <div class="text-start mb-2"><b>Nome:</b> {{ current_user.nome }}</div>
+                    <div class="text-start mb-2"><b>Cognome:</b> {{ current_user.cognome }}</div>
+                    <div class="text-start mb-2"><b>Email:</b> {{ current_user.email }}</div>
+                    <div class="text-start mb-2"><b>Ruolo:</b> {{ p_ruolo }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 d-flex align-items-stretch">
+            <div class="profile-sidebox text-center w-100 d-flex align-items-center justify-content-center">
+                <!-- Per gli organizzatori sezione con le performances + statistiche dei biglietti -->
+                {% if p_ruolo == 'Organizzatore' %}
+                <div class="d-flex flex-column align-items-center w-100 py-3">
+                    <div class="d-flex align-items-center justify-content-between w-100 mb-3">
+                        <div class="d-flex align-items-center">
+                            <span class="fw-bold performance-title mb-0 me-2">Vuoi inserire una performance?</span>
+                            <button type="button" class="btn btn-sm btn-success btn-performance-add ms-2"
+                                data-bs-toggle="modal" data-bs-target="#performanceModal">+</button>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-sm fw-bold" data-bs-toggle="modal"
+                            data-bs-target="#statsModal">
+                            Statistiche
+                        </button>
+                    </div>
+                    <hr class="my-4 w-100">
+                    <div class="text-start w-100 mb-2 bozze-title">Bozze:</div>
+                    <div class="d-flex flex-column align-items-center w-100">
+                        {% if p_performances_draft_list and p_performances_draft_list|length > 0 %}
+                        {% for perf in p_performances_draft_list %}
+                        <div class="performance-list-box mb-3 d-flex flex-row align-items-center p-0">
+                            <!-- Foto grande a sinistra -->
+                            <div class="performance-img-box">
+                                {% if perf['Immagine'] %}
+                                <img src="{{ perf['Immagine'] }}" alt="Immagine performance" class="performance-img">
+                                {% else %}
+                                <div class="performance-img-placeholder">
+                                    <span class="placeholder-x">&#10006;</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- Info performance -->
+                            <div class="flex-grow-1 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <b>{{ perf['Artista'] }}</b> &mdash; {{ perf['GiornoInizio'] }}, {{
+                                    perf['OraInizio'] }}<br>
+                                    <span>Durata: {{ perf['Durata'] }} min</span>
+                                </div>
+                            </div>
+                            <!-- Stato pubblicazione e azione -->
+                            <div class="d-flex flex-column align-items-end justify-content-between h-100 p-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-2">Pubblica</span>
+                                    <span class="pubblica-dot bozza"></span>
+                                </div>
+                                <a href="/performance/{{ perf['ID'] }}" class="edit-draft-link mt-2"
+                                    title="Modifica bozza">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path
+                                            d="M15.502 1.94a.5.5 0 0 1 0 .706l-1 1a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 0-.707l1-1a.5.5 0 0 1 .707 0l1 1zm-1.75 2.456-1-1L4.939 11.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l7.813-7.814zm-2.647-.354 1 1L5.207 13H4.5v-.707l7.605-7.605z" />
+                                        <path fill-rule="evenodd"
+                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="text-muted mb-3">Nessuna bozza presente.</div>
+                        {% endif %}
+                    </div>
+                    <hr class="my-3 w-100 hr-light">
+                    <div class="text-start w-100 mb-2 pubblicate-title">Performance pubblicate:</div>
+                    <div class="d-flex flex-column align-items-center w-100">
+                        {% if p_performances_list and p_performances_list|length > 0 %}
+                        {% for perf in p_performances_list %}
+                        <div class="performance-list-box mb-3 d-flex flex-row align-items-center p-0">
+                            <!-- Foto grande a sinistra -->
+                            <div class="performance-img-box">
+                                {% if perf['Immagine'] %}
+                                <img src="{{ perf['Immagine'] }}" alt="Immagine performance" class="performance-img">
+                                {% else %}
+                                <div class="performance-img-placeholder">
+                                    <span class="placeholder-x">&#10006;</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- Info performance -->
+                            <div class="flex-grow-1 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <b>{{ perf['Artista'] }}</b> &mdash; {{ perf['GiornoInizio'] }}, {{
+                                    perf['OraInizio'] }}<br>
+                                    <span>Durata: {{ perf['Durata'] }} min</span>
+                                </div>
+                            </div>
+                            <!-- Stato pubblicazione e azione -->
+                            <div class="d-flex flex-column align-items-end justify-content-between h-100 p-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="me-2">Pubblica</span>
+                                    <span class="pubblica-dot pubblica"></span>
+                                </div>
+                                <a href="/performance/{{ perf['ID'] }}" class="view-public-link mt-2"
+                                    title="Visualizza performance">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                                        class="bi bi-eye" viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                        <path
+                                            d="M8 5.5A2.5 2.5 0 1 0 8 10a2.5 2.5 0 0 0 0-4.5zm0 1A1.5 1.5 0 1 1 8 9a1.5 1.5 0 0 1 0-3z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <div class="text-muted mb-3">Nessuna performance pubblicata.</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="performanceModal" tabindex="-1" aria-labelledby="performanceModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="performanceModalLabel">Inserisci Performance</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="needs-validation" novalidate method="post" action="/insert-performance"
+                                    enctype="multipart/form-data" id="performanceForm">
+                                    <div class="mb-3">
+                                        <label for="performanceArtist" class="form-label">Artista</label>
+                                        <input type="text" class="form-control" id="performanceArtist" name="artista"
+                                            placeholder="Nome artista" required>
+                                        <div class="invalid-feedback">Inserisci il nome dell'artista.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceDay" class="form-label">Giorno Inizio</label>
+                                        <select class="form-select" id="performanceDay" name="giorno_inizio" required>
+                                            <option value="">Seleziona...</option>
+                                            <option value="venerdi">Venerdì</option>
+                                            <option value="sabato">Sabato</option>
+                                            <option value="domenica">Domenica</option>
+                                        </select>
+                                        <div class="invalid-feedback">Seleziona il giorno di inizio.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceStartTime" class="form-label">Ora Inizio</label>
+                                        <input type="time" class="form-control" id="performanceStartTime"
+                                            name="ora_inizio" required>
+                                        <div class="invalid-feedback">Inserisci l'ora di inizio.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceDuration" class="form-label">Durata (minuti)</label>
+                                        <input type="number" class="form-control" id="performanceDuration" name="durata"
+                                            min="1" placeholder="Durata in minuti" required>
+                                        <div class="invalid-feedback">Inserisci la durata in minuti.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceDescription" class="form-label">Descrizione</label>
+                                        <textarea class="form-control" id="performanceDescription" name="descrizione"
+                                            rows="2" placeholder="Descrizione della performance" required></textarea>
+                                        <div class="invalid-feedback">Inserisci una descrizione.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceStage" class="form-label">Palco</label>
+                                        <select class="form-select" id="performanceStage" name="palco" required>
+                                            <option value="">Seleziona...</option>
+                                            {% for palco in p_palchi %}
+                                            <option value="{{ palco[0] }}">{{ palco[1] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <div class="invalid-feedback">Seleziona un palco.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceGenre" class="form-label">Genere Musicale</label>
+                                        <input type="text" class="form-control" id="performanceGenre" name="genere"
+                                            placeholder="Genere musicale" required>
+                                        <div class="invalid-feedback">Inserisci il genere musicale.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="performanceImages" class="form-label">Inserisci immagini
+                                            promozionali</label>
+                                        <input type="file" class="form-control" id="performanceImages"
+                                            name="performanceImages" accept="image/*" multiple required>
+                                        <div class="invalid-feedback">Carica almeno una immagine promozionale.</div>
+                                    </div>
+                                    <div class="mb-3 d-flex align-items-center justify-content-between">
+                                        <label for="performancePublished" class="form-label mb-0">Inserisci performance
+                                            come pubblica</label>
+                                        <input class="form-check-input ms-2" type="checkbox" id="performancePublished"
+                                            name="pubblicata">
+                                    </div>
+                                    <div class="modal-footer"></div>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Chiudi</button>
+                                    <button type="submit" class="btn btn-primary" id="savePerformanceBtn">Salva</button>
+                            </div>
+                            </form>
+                            <!-- Modale conferma pubblicazione -->
+                            <div class="modal fade" id="confirmPublishModal" tabindex="-1"
+                                aria-labelledby="confirmPublishModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content bg-danger text-white">
+                                        <div class="modal-header border-0">
+                                            <h5 class="modal-title" id="confirmPublishModalLabel">Attenzione</h5>
+                                            <button type="button" class="btn-close btn-close-white"
+                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Una volta pubblicata, la performance <b>non potrà più essere
+                                                modificata</b>.<br>Sei sicuro di voler continuare?
+                                        </div>
+                                        <div class="modal-footer border-0">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-outline-light"
+                                                id="confirmPublishYes">Sì, pubblica</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Statistiche -->
+                <div class="modal fade" id="statsModal" tabindex="-1" aria-labelledby="statsModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="statsModalLabel">Statistiche biglietti venduti per giorno
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Venerdì</label>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ stat_venerdi|progress_percent }}%" id="stat-venerdi">{{
+                                            stat_venerdi }}/200</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Sabato</label>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ stat_sabato|progress_percent }}%" id="stat-sabato">{{
+                                            stat_sabato }}/200</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Domenica</label>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: {{ stat_domenica|progress_percent }}%" id="stat-domenica">{{
+                                            stat_domenica }}/200</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Per i partecipanti, mostrare il biglietto acquistre / link per acquisto -->
+                {% else %}
+                <div class="d-flex flex-column align-items-center w-100 py-3">
+                    {% if not p_ticket %}
+                    <div class="alert alert-warning alert-ticket-warning">
+                        Non hai ancora acquistato un biglietto! <a href="/tickets" class="btn btn-primary ms-2">Acquista
+                            ora</a>
+                    </div>
+                    {% else %}
+                    <div class="ticket-list-box mb-3 d-flex flex-row align-items-center w-100">
+                        <div class="ticket-type-big d-flex align-items-center justify-content-center">
+                            <span>{{ p_ticket['Tipologia']|replace('daily', 'DAILY PASS')|replace('2days', '2 DAYS
+                                PASS')|replace('full', 'FULL PASS') }}</span>
+                        </div>
+                        <div class="flex-grow-1 p-4 d-flex flex-column justify-content-center">
+                            <div class="ticket-days-list">
+                                {% if p_ticket['Tipologia'] == 'daily' %}
+                                <span>Valido per: <b>{{ p_ticket['Giorno1']|capitalize }}</b></span>
+                                {% elif p_ticket['Tipologia'] == '2days' %}
+                                <span>Valido per: <b>{{ p_ticket['Giorno1']|capitalize }}</b> e <b>{{
+                                        p_ticket['Giorno2']|capitalize }}</b></span>
+                                {% elif p_ticket['Tipologia'] == 'full' %}
+                                <span>Valido per: <b>{{ p_ticket['Giorno1']|capitalize }}</b>, <b>{{
+                                        p_ticket['Giorno2']|capitalize }}</b>, <b>{{ p_ticket['Giorno3']|capitalize
+                                        }}</b></span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+    // Codice JS per la validazione del form, preso direttanente da BS 
+    // https://getbootstrap.com/docs/5.2/forms/validation/#custom-styles
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })();
+
+    // Gestisce la logica di conferma pubblicazione performance:
+    //    - Quando l'utente clicca su "Salva" e la checkbox "inserisci performance come pubblica" è selezionata,
+    //      mostra la modale di conferma pubblicazione invece di inviare subito il form.
+    //    - Se la modale viene confermata (click su "Sì, pubblica"), il form viene inviato.
+    //    - Se la modale viene annullata, il form non viene inviato.
+    //    - Se la checkbox non è selezionata, il form viene inviato normalmente.
+    const form = document.getElementById('performanceForm');
+    const saveBtn = document.getElementById('savePerformanceBtn');
+    const publishCheckbox = document.getElementById('performancePublished');
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmPublishModal'));
+    const confirmYes = document.getElementById('confirmPublishYes');
+
+    if (form && saveBtn && publishCheckbox && confirmModal && confirmYes) {
+        saveBtn.addEventListener('click', function (e) {
+            if (publishCheckbox.checked) {
+                if (!form.checkValidity()) return; // lascia la validazione bootstrap
+                e.preventDefault();
+                confirmModal.show();
+            }
+        });
+        confirmYes.addEventListener('click', function () {
+            form.submit();
+        });
+    }
+</script>
+
+{% endblock %}

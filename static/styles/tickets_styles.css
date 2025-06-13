@@ -1,0 +1,63 @@
+.tickets-album {
+    width: 85vw;
+    max-width: 85vw;
+    margin: auto;
+    background: transparent;
+}
+
+.tickets-img {
+    height: 225px;
+    object-fit: cover;
+}
+
+.tickets-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.tickets-date {
+    font-size: 1.1rem;
+}
+
+.tickets-stage {
+    font-size: 1.05rem;
+    color: #666;
+    font-weight: 600;
+}
+.tickets-stage span {
+    font-weight: 600;
+}
+
+.tickets-duration {
+    font-size: 1rem;
+    color: #888;
+}
+
+.album.bg-body-tertiary {
+    background: transparent !important;
+}
+
+.container {
+    background: transparent !important;
+}
+
+.motivational-phrase {
+    color: #3a5d1a;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.card-title.daily-pass,
+.card-title.two-days-pass,
+.card-title.full-pass {
+    color: #e3a87c;
+    font-weight: 700;
+}
+
+.pass-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}

@@ -1,0 +1,85 @@
+#infopage-btn-home {
+    background: #e3a87c;
+    border: 2px solid #3a5d1a;
+    color: #2d3a4a;
+    font-weight: 700;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+#infopage-btn-home:hover, #infopage-btn-home:focus {
+    background: #fff6ee;
+    color: #3a5d1a;
+    border-color: #e99784;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(222, 198, 166, 0.22);
+}
+
+.container {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    color: #3a5d1a;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 8px rgba(58, 93, 26, 0.08);
+}
+
+h2 {
+    color: #384825 !important;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 8px rgba(78, 110, 42, 0.08);
+}
+
+.lead, .fs-3, .fs-5, p {
+    color: #111;
+    font-weight: 500;
+    background: none;
+    text-shadow: none;
+}
+
+.tickets-album {
+    width: 85vw;
+    max-width: 85vw;
+    margin: auto;
+    background: transparent;
+}
+
+.tickets-img {
+    height: 225px;
+    object-fit: cover;
+}
+
+.tickets-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.tickets-date {
+    font-size: 1.1rem;
+}
+
+.tickets-stage {
+    font-size: 1.05rem;
+    color: #666;
+    font-weight: 600;
+}
+.tickets-stage span {
+    font-weight: 600;
+}
+
+.tickets-duration {
+    font-size: 1rem;
+    color: #888;
+}
+
+.album.bg-body-tertiary {
+    background: transparent !important;
+}
+
+.container {
+    background: transparent !important;
+}
+
+.homepage-calendar-title {
+    font-size: 2rem;
+    color: #b02a37;
+}

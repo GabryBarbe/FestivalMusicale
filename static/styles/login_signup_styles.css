@@ -1,0 +1,78 @@
+.form-label,
+.form-check-label,
+button.btn {
+    font-weight: 700;
+}
+
+/* Bottone stile homepage feature (btn-feature) per login/signin */
+.btn-feature {
+    background: #e3a87c;
+    border: 2px solid #3a5d1a;
+    color: #2d3a4a;
+    font-weight: 700;
+    font-size: 1rem;
+    border-radius: 2rem;
+    padding: 0.25rem 1.1rem;
+    box-shadow: 0 2px 8px rgba(222, 198, 166, 0.13);
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.btn-feature:hover, .btn-feature:focus {
+    background: #fff6ee;
+    color: #3a5d1a;
+    border-color: #e99784;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(222, 198, 166, 0.22);
+}
+
+.login-form {
+  max-width: 40vw;
+  min-width: 260px;
+  width: 40%;
+}
+
+.login-form, .login-form * {
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+/* Forza la label della checkbox Ricordami sempre nera, anche dopo validazione */
+.form-check-label {
+    font-weight: 700;
+    color: #212529 !important;
+}
+
+.was-validated .form-check-label {
+    color: #212529 !important;
+}
+
+/* Forza la checkbox Ricordami sempre nera, anche dopo validazione */
+.form-check-input {
+    border-color: #212529 !important;
+    background-color: #fff !important;
+}
+.form-check-input:checked {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+}
+.was-validated .form-check-input:valid,
+.was-validated .form-check-input:invalid {
+    border-color: #212529 !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+}
+.was-validated .form-check-input:valid:checked {
+    background-color: #212529 !important;
+    border-color: #212529 !important;
+}
+
+.alert-danger {
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #b02a37;
+    color: #fff;
+    border-color: #a71d2a;
+}

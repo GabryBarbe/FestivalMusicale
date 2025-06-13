@@ -1,0 +1,70 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/contacs_styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="p-4 text-center rounded-3 contact-jumbotron">
+        <h1 class="text-body-emphasis">Hai domande?</h1>
+        <p class="lead">Riempi il form qua sotto e ti risponderemo nel minor tempo possibile!</p>
+    </div>
+
+    {% if p_message %}
+    <div class="alert alert-success text-center" role="alert">
+        {{ p_message }}
+    </div>
+    {% endif %}
+
+    <form class="row g-3 mx-auto contact-form needs-validation" action="/send-contact-form" method="post" novalidate>
+        <div class="col-md-6">
+            <label for="inputNome" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="inputNome" name="nome" placeholder="Inserisci il tuo nome" required>
+            <div class="invalid-feedback fw-bold">
+                Inserisci il tuo nome.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCognome" class="form-label">Cognome</label>
+            <input type="text" class="form-control" id="inputCognome" name="cognome" placeholder="Inserisci il tuo cognome" required>
+            <div class="invalid-feedback fw-bold">
+                Inserisci il tuo cognome.
+            </div>
+        </div>
+        <div class="col-12">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Inserisci la tua email" required>
+            <div class="invalid-feedback fw-bold">
+                Inserisci una email valida.
+            </div>
+        </div>
+        <div class="col-12">
+            <label for="inputMessage" class="form-label">Messaggio</label>
+            <textarea class="form-control" id="inputMessage" name="message" rows="5" placeholder="Scrivi il tuo messaggio" required></textarea>
+            <div class="invalid-feedback fw-bold">
+                Inserisci un messaggio.
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-feature">Invia</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+{% endblock %}

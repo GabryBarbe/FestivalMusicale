@@ -1,0 +1,57 @@
+{% extends "base_template.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="static/styles/raggiungici_styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="p-5 text-center rounded-3 raggiungici-jumbotron">
+        <h1 class="text-body-emphasis">Come raggiungere il Castello della Mandria</h1>
+        <p class="lead">Il Castello della Mandria è facilmente raggiungibile dalle principali uscite autostradali di Torino. Segui le indicazioni qui sotto per arrivare comodamente al festival.</p>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="card-title">Dall'uscita autostradale di Torino Nord</h5>
+                    <p class="card-text">Prendi la tangenziale in direzione Venaria Reale. Segui le indicazioni per il Parco della Mandria e prosegui fino al Castello.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="card-title">Dall'uscita autostradale di Torino Sud</h5>
+                    <p class="card-text">Imbocca la tangenziale in direzione Nord. Segui le indicazioni per Venaria Reale e successivamente per il Parco della Mandria.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="card-title">Con i mezzi pubblici</h5>
+                    <p class="card-text">Da Torino Porta Susa, prendi il bus GTT linea 11 in direzione Venaria Reale. Scendi alla fermata "Mandria" e segui le indicazioni per il Castello.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="card shadow-sm w-100">
+                <div class="card-body">
+                    <h5 class="card-title">In bicicletta</h5>
+                    <p class="card-text">Il Parco della Mandria è dotato di piste ciclabili che collegano Torino e i comuni limitrofi. Puoi parcheggiare la tua bicicletta presso l'area dedicata vicino all'ingresso del Castello.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info text-center mt-4" role="alert">
+        <h5>Parcheggi</h5>
+        <p>È disponibile un ampio parcheggio gratuito per auto e moto vicino all'ingresso principale del Castello.</p>
+    </div>
+</div>
+{% endblock %}

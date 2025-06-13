@@ -1,0 +1,200 @@
+body {
+    font-family: 'Roboto', Arial, sans-serif !important;
+}
+
+.profile-jumbotron {
+    background-color: #ebd6c1;
+    width: 80vw;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+}
+
+.profile-sidebox {
+    background: #fff6ee;
+    border: 2px solid #e3a87c;
+    border-radius: 1.5rem;
+    padding: 2.5rem 1rem;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(222, 198, 166, 0.13);
+    font-family: 'Roboto', Arial, sans-serif;
+    margin-bottom: 1rem;
+}
+
+.profile-info {
+    font-size: 1.25rem;
+}
+
+.performance-title {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.btn-performance-add {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-error-alert {
+    background-color: #b02a37 !important; /* come login */
+    color: #fff !important;
+    border-color: #a71d2a !important;
+    max-width: 80vw;
+    width: 80vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(176, 42, 55, 0.13);
+}
+
+.performance-list-box {
+    width: 75%;
+    background: #fff6ee;
+    border: 2px solid #e3a87c;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(222, 198, 166, 0.10);
+    margin-bottom: 1rem;
+    font-size: 1.08rem;
+    transition: box-shadow 0.2s;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    min-height: 120px;
+}
+
+.performance-list-box:hover {
+    box-shadow: 0 4px 16px rgba(222, 198, 166, 0.18);
+}
+
+.performance-img-box {
+    height: 120px;
+    width: 120px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 1.2rem 0 0 1.2rem;
+    background: #e3a87c1a;
+}
+
+.performance-img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    border-radius: 1.2rem 0 0 1.2rem;
+}
+
+.pubblica-dot {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-left: 2px;
+}
+
+.pubblica-dot.pubblica {
+    background: #28a745;
+    border-color: #28a745;
+}
+
+.pubblica-dot.bozza {
+    background: #dc3545;
+    border-color: #dc3545;
+}
+
+.edit-draft-link {
+    color: #e3a87c;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.edit-draft-link:hover {
+    color: #b02a37;
+}
+
+.ticket-type-big {
+    min-width: 210px;
+    background: #e3a87c;
+    color: #fff;
+    font-size: 2.1rem;
+    font-weight: 700;
+    border-radius: 2rem;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2.2rem;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-left: 1.5rem;
+    margin-right: 2.5rem;
+    box-shadow: 0 2px 8px rgba(227, 168, 124, 0.13);
+}
+
+.ticket-list-box {
+    background: #fff6ee;
+    border: 2px solid #e3a87c;
+    border-radius: 1.2rem;
+    box-shadow: 0 2px 8px rgba(222,198,166,0.10);
+    min-height: 120px;
+    width: 100%;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    overflow: visible;
+}
+
+.ticket-days-list {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #222;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.ticket-list-box .fw-bold {
+    font-size: 1.2rem;
+    color: #e3a87c;
+}
+
+.alert-ticket-warning {
+    font-size: 1.1rem;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+
+.bozze-title,
+.pubblicate-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.hr-light {
+    opacity: 0.5;
+}
+
+.progress-bar {
+    min-width: 48px; /* Garantisce che il testo sia sempre visibile anche con percentuali basse */
+    text-align: left;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    white-space: nowrap;
+}
