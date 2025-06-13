@@ -1,0 +1,10 @@
+Utenti:
+
+u1@sunrift.it : sunrift2025!
+u2@sunrift.it : sunrift2025!
+u3@sunrift.it : sunrift2025!
+
+Organizzatori:
+
+org1@sunrift.it : sunrift2025!
+org2@sunrift.it : sunrift2025!
